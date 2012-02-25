@@ -269,7 +269,7 @@ module RedisOrm
         else
           if index && index[:options][:unique]
             id = $redis.get prepared_index
-            model_name.to_s.camelize.constantize.find(id)
+            [model_name.to_s.camelize.constantize.find(id)]
           else
             if direction.to_s == 'desc'
               $redis.zrevrangebyscore(ids_key, order_max_limit, 0, :limit => limit).compact.collect{|id| find(id)}
